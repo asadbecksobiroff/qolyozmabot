@@ -24,7 +24,7 @@ def row(text):
     return text
 
 
-def bogin(text1):
+def bogin(text1, length):
     result = []
     seg = ''
     a = 0
@@ -33,7 +33,7 @@ def bogin(text1):
     text = row(text1)
 
     for x in text:
-        if a >= 24:
+        if a >= length:
             if text[b-1] == ' ':
                 result.append(seg)
                 seg = ''
@@ -51,20 +51,22 @@ def bogin(text1):
     return result
 
 
-def Con(*text):
+def Con(typePaper, *text):
+    length = 24
+    if typePaper == "Oq list": length = 40
     l = []
     for x in text:
         c = x.count('<n>')
         if c:
             for i in range(c):
                 f = x.find('<n>')
-                segment = bogin(x[:f])
+                segment = bogin(x[:f], length)
                 l.append(segment)
                 x = x[f+3:]
-            segment = bogin(x)
+            segment = bogin(x, length)
             l.append(segment)
         else:
-            segment = bogin(x)
+            segment = bogin(x, length)
             l.append(segment)
     return l
 
